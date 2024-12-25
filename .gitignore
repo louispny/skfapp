@@ -1,0 +1,11 @@
+# Backend rules
+/backend/__pycache__
+/backend/*.pyc
+/backend/env/
+
+# Global IDE and system files
+.idea/
+.vscode/
+*.sublime-workspace
+.DS_Store
+Thumbs.db

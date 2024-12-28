@@ -322,6 +322,10 @@
       </div>
     </div>
   </div>
+
+  <app-upload-input (fileUploaded)="onFileSelected($event)"></app-upload-input>
+  <app-send-button [file]="selectedFile"></app-send-button>
+
 </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->

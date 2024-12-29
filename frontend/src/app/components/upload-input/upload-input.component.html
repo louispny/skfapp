@@ -1,1 +1,14 @@
-<input type="file" (change)="onFileChange($event)" />
+<div class="flex items-center">
+    <label *ngIf="!selectedFile"
+        class="flex items-center px-4 py-2 bg-blue-600 text-white text-base font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 cursor-pointer">
+        Upload File
+        <input *ngIf="!selectedFile"
+        [id]="destination" 
+        type="file" 
+        class="hidden" 
+        (change)="onFileChange($event)" />
+    </label>
+    <span *ngIf="selectedFile" class="ml-4 text-gray-600 text-sm font-semibold">
+        {{ selectedFile.name }}  
+    </span>
+</div>

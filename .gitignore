@@ -1,7 +1,9 @@
 # Backend rules
-/backend/__pycache__
+/backend/app/__pycache__
 /backend/*.pyc
 /backend/env/
+/backend/uploads/
+
 
 # Global IDE and system files
 .idea/

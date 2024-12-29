@@ -10,16 +10,16 @@ import { ApiService } from '../../services/api/api.service';
   styleUrl: './send-button.component.css'
 })
 export class SendButtonComponent {
-  @Input() file: File | null = null;
+  @Input() files: { file: File, destination: string }[] = [];
 
   constructor(private apiService: ApiService) {}
 
   sendFile(): void {
-    if (!this.file) {
+    if (this.files.length === 0) {
       console.error('No file selected');
       return;
     }
-    this.apiService.uploadFile(this.file).subscribe(
+    this.apiService.uploadFile(this.files).subscribe(
       (response) => {
         console.log('Response from server', response);
       },

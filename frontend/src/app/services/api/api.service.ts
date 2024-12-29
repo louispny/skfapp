@@ -13,9 +13,12 @@ export class ApiService {
         return this.http.get('/api/test');
     }
 
-    uploadFile(file: File): Observable<any> {
+    uploadFile(files: { file: File, destination: string }[]): Observable<any> {
         const formData = new FormData();
-        formData.append('file', file);
+        files.forEach(item => {
+            formData.append('files', item.file, item.file.name);
+            formData.append('destinations', item.destination);
+        });
         return this.http.post('/api/upload', formData);
     }
 }

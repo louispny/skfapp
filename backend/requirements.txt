@@ -2,3 +2,5 @@ fastapi
 uvicorn
 os
 typing
+sys
+pandas

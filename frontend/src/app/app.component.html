@@ -1,35 +1,47 @@
 <main class="main">
-  <div>
-    <span class="text-2xl font-semibold">Upload Files</span>
-    <div>
-      <span class="text-lg font-semibold">Price List</span>
-      <app-upload-input (fileUploaded)="onFileSelected($event)" [destination]="'price'">
-      </app-upload-input>
-    </div>
-    <div>
-      <span class="text-lg font-semibold">Standard Discounts</span>
-      <app-upload-input *ngIf="selectedFiles.length > 0" (fileUploaded)="onFileSelected($event)" [destination]="'standard-discount'">
-      </app-upload-input>
-    </div>
-    <div>
-      <span class="text-lg font-semibold">Special Discounts</span>
-      <app-upload-input *ngIf="selectedFiles.length > 1" (fileUploaded)="onFileSelected($event)" [destination]="'special-discount'">
-      </app-upload-input>
-    </div>
-    <div>
-      <span class="text-lg font-semibold">
-        Declarations
-      </span>
-      <app-upload-input *ngIf="selectedFiles.length > 2" (fileUploaded)="onFileSelected($event)" [destination]="'declaration'">
-      </app-upload-input>
-    </div>
-    <div>
-      <span class="text-lg font-semibold">Link between clients and special discounts</span>
-      <app-upload-input *ngIf="selectedFiles.length > 3" (fileUploaded)="onFileSelected($event)" [destination]="'link'">
-      </app-upload-input>
+  <div class="m-4">
+    <span class="text-2xl font-semibold">Fichiers de référence</span>
+    <div class="flex flex-row gap-4">
+      <div class="flex-1 bg-gray-100 p-4 rounded shadow">
+        <span class="text-lg font-semibold">Tarifs publics SKF</span>
+        <app-name-list [methodName]="'getPriceFileNames'" [componentTitle]="'Nom des fichiers'"></app-name-list>
+      </div>
+      <div class="flex-1 bg-gray-100 p-4 rounded shadow">
+        <span class="text-lg font-semibold">Liste des aides</span>
+        <app-name-list [methodName]="'getAidsListFileNames'" [componentTitle]="'Nom du fichier'"></app-name-list>
+      </div>
+      <div class="flex-1 bg-gray-100 p-4 rounded shadow">
+        <span class="text-lg font-semibold">Historique des ventes</span>
+        <p class="text-2xl text-gray-600">
+          Fonctionnalité de contrôle de l’historique de vente à développer
+        </p>
+      </div>
+      <div class="flex-1 flex flex-col gap-4">
+        <div class="flex-1 bg-gray-100 p-4 rounded shadow">
+          <span class="text-lg font-semibold">Remisier standard DD</span>
+          <app-dropdown [methodName]="'getStandardDiscountFileNames'" (optionSelected)="onOptionSelected('standardDiscountFileName',$event)"></app-dropdown>
+        </div>
+        <div class="flex-1 bg-gray-100 p-4 rounded shadow">
+          <span class="text-lg font-semibold">Remisiers aidés</span>
+          
+          <app-dropdown [methodName]="'getSpecialDiscountFileNames'" (optionSelected)="onOptionSelected('specialDiscountFileName',$event)"></app-dropdown>
+        </div>
+      </div>
+      
     </div>
   </div>
-  <app-send-button *ngIf="selectedFiles.length > 4" [files]="selectedFiles"></app-send-button>
+      <div class="bg-gray-100 p-4 rounded shadow m-4">
+        <span class="text-lg font-semibold">
+          Déclaration de ventes
+        </span>
+        <app-upload-input (fileUploaded)="onFileSelected($event)" [destination]="'declaration'">
+        </app-upload-input>
+      </div>
+  <app-send-button *ngIf="selectedFiles.length > 0 && standardDiscountFileName !='' && specialDiscountFileName !='' && errors.length == 0" [files]="selectedFiles" (errorsChange)="onErrorsChange($event)"
+    [standardDiscountFileName]="standardDiscountFileName" [specialDiscountFileName]="specialDiscountFileName"
+    class="m-4">
+  </app-send-button>
+  <app-result-list [results]="errors"></app-result-list>
 </main>
 
 <router-outlet />

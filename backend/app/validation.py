@@ -44,17 +44,16 @@ def validateUpload(priceFilePath, standardDiscountFilePath, specialDiscountFileP
             # Check if the paid price is correct
             standard_discount = ed.getStandardDiscount(family_code, standard_discount_df)
             expected_price = quantity * unit_price * (1 - standard_discount / 100)
+            expected_price = round(expected_price, 2)
             
             special_discount = ed.get_special_discount(family_code, client, link_df, special_discount_df)
             expected_discount = expected_price - (quantity * unit_price * (1 - special_discount / 100))
+            expected_discount = round(expected_discount, 2)
 
             if (abs(price - expected_price)/max(price, expected_price) > 0.01) or abs(discount - expected_discount)/max(discount, expected_discount) > 0.01:
-                errors.append(f"Sales file incorrect at line {sale.name + 1}: expected price {expected_price}, got {price}, expected discount {expected_discount}, got {discount}")
+                errors.append(f"Ligne {sale.name + 1}: référence produit {product_ref}, prix net correct: {expected_price} ({price} déclaré), remise aidée attendue {expected_discount} ({discount} déclaré)")
         
-        if errors:
-            return {"status": "error", "message": "Validation failed", "errors": errors}
-        
-        return {"status": "success", "message": "Files validated"}
+        return {"errors": errors}
     
     except Exception as e:
         return {"status": "error", "message": str(e)}
